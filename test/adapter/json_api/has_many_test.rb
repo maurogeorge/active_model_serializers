@@ -67,6 +67,22 @@ module ActiveModel
             assert_equal expected, @adapter.serializable_hash[:included]
           end
 
+          def test_custom_key
+            serializer = PostWithCustomKeysSerializer.new(@post)
+            adapter = ActiveModel::Serializer::Adapter::JsonApi.new(serializer)
+            expected = [
+              {
+                type: "comments",
+                id: "1"
+              },
+              {
+                type: "comments",
+                id: "2"
+              }
+            ]
+            assert_equal expected, adapter.serializable_hash[:data][:relationships][:reviews][:data]
+          end
+
           def test_limit_fields_of_linked_comments
             @adapter = ActiveModel::Serializer::Adapter::JsonApi.new(@serializer, include: 'comments', fields: {comment: [:id]})
             expected = [{

@@ -40,6 +40,15 @@ module ActiveModel
               ]
             }.to_json, adapter.serializable_hash[:post].to_json)
           end
+
+          def test_has_many_with_custom_key
+            serializer = PostWithCustomKeyAndSerializer .new(@post)
+            adapter = ActiveModel::Serializer::Adapter::Json.new(serializer)
+            assert_equal([
+              {id: 1, body: 'ZOMG A COMMENT'},
+              {id: 2, body: 'ZOMG ANOTHER COMMENT'}
+            ], adapter.serializable_hash[:post][:reviews])
+          end
         end
       end
     end
