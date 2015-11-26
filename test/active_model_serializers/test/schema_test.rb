@@ -32,6 +32,11 @@ module ActiveModelSerializers
         assert_response_schema('custom/show.json')
       end
 
+      def test_that_assert_with_a_hyper_schema
+        get :show
+        assert_response_schema('hyper_schema.json')
+      end
+
       def test_that_assert_with_a_custom_schema_directory
         original_schema_path = ActiveModel::Serializer.config.schema_path
         ActiveModel::Serializer.config.schema_path = 'test/support/custom_schemas'
