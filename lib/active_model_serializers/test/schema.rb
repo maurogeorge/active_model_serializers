@@ -1,4 +1,4 @@
-require 'json-schema'
+require 'json_schema'
 
 module ActiveModelSerializers
   module Test
@@ -16,7 +16,7 @@ module ActiveModelSerializers
         end
 
         def call
-          JSON::Validator.validate!(schema_full_path, response.body, strict: true)
+          schema.validate!(data)
         end
 
         private
@@ -39,6 +39,18 @@ module ActiveModelSerializers
 
         def schema_path_default
           "#{controller_path}/#{action}.json"
+        end
+
+        def schema_data
+          JSON.parse(File.read(schema_full_path))
+        end
+
+        def schema
+          JsonSchema.parse!(schema_data)
+        end
+
+        def data
+          JSON.parse(response.body)
         end
       end
     end
