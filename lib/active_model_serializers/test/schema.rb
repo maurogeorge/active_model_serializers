@@ -1,8 +1,9 @@
 require 'json-schema'
 
-module ActiveModel
-  class Serializer
-    module Assertions
+module ActiveModelSerializers
+  module Test
+    module Schema
+
       def assert_response_schema(schema_path = nil)
         controller_path = response.request.filtered_parameters[:controller]
         action = response.request.filtered_parameters[:action]
