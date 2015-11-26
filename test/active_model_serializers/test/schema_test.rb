@@ -20,9 +20,9 @@ module ActiveModelSerializers
         assert_response_schema
       end
 
-      def test_that_raises_a_json_schema_with_a_invalid_schema
+      def test_that_raises_a_json_schema_error_with_a_invalid_schema
         get :show
-        assert_raises JSON::Schema::ValidationError do
+        assert_raises RuntimeError do
           assert_response_schema
         end
       end
