@@ -27,7 +27,6 @@ ActiveSupport.on_load(:action_controller) do
   ActionDispatch::Reloader.to_prepare do
     ActiveModel::Serializer.serializers_cache.clear
   end
-  ActionController::TestCase.send(:include, ActiveModelSerializers::Test::Schema)
 end
 
 require 'active_model/serializer/railtie'
