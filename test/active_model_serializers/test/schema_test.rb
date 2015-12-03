@@ -5,11 +5,21 @@ module ActiveModelSerializers
     class SchemaTest < ActionController::TestCase
       class MyController < ActionController::Base
         def index
-          render json: Profile.new(name: 'Name 1', description: 'Description 1', comments: 'Comments 1')
+          render json: profile
         end
 
         def show
           index
+        end
+
+        def render_using_json_api
+          render json: profile, adapter: :json_api
+        end
+
+        private
+
+        def profile
+          Profile.new(name: 'Name 1', description: 'Description 1', comments: 'Comments 1')
         end
       end
 
@@ -40,6 +50,11 @@ module ActiveModelSerializers
       def test_simple_json_pointers
         get :show
         assert_response_schema('simple_json_pointers.json')
+      end
+
+      def test_json_api_schema
+        get :render_using_json_api
+        assert_response_schema('render_using_json_api.json')
       end
 
       def test_that_assert_with_a_custom_schema_directory
