@@ -3,20 +3,24 @@ require 'json_schema'
 module ActiveModelSerializers
   module Test
     module Schema
-      def assert_response_schema(schema_path = nil)
-        AssertResponseSchema.new(schema_path, response).call
+      def assert_response_schema(schema_path = nil, message = nil)
+        matcher = AssertResponseSchema.new(schema_path, response, message)
+        assert(matcher.call, matcher.message)
       end
 
       class AssertResponseSchema
-        attr_reader :schema_path, :response
+        attr_reader :schema_path, :response, :message
 
-        def initialize(schema_path, response)
+        def initialize(schema_path, response, message)
           @response = response
           @schema_path = schema_path || schema_path_default
+          @message = message
         end
 
         def call
-          schema.validate!(data)
+          status, errors = schema.validate(data)
+          @message ||= errors.map(&:to_s).to_sentence
+          status
         end
 
         private

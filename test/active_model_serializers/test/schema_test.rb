@@ -30,11 +30,26 @@ module ActiveModelSerializers
         assert_response_schema
       end
 
-      def test_that_raises_a_json_schema_error_with_a_invalid_schema
+      def test_that_raises_a_minitest_error_with_a_invalid_schema
+        message = "#/name: failed schema #/properties/name: For 'properties/name', \"Name 1\" is not an integer. and #/description: failed schema #/properties/description: For 'properties/description', \"Description 1\" is not a boolean."
+
         get :show
-        assert_raises RuntimeError do
+
+        error = assert_raises Minitest::Assertion do
           assert_response_schema
         end
+        assert_equal(message, error.message)
+      end
+
+      def test_that_raises_error_with_a_custom_message_with_a_invalid_schema
+        message = 'oh boy the show is broken'
+
+        get :show
+
+        error = assert_raises Minitest::Assertion do
+          assert_response_schema(nil, message)
+        end
+        assert_equal(message, error.message)
       end
 
       def test_that_assert_with_a_custom_schema
