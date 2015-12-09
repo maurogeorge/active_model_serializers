@@ -74,5 +74,5 @@ RSpec for example we can change this to `spec/support/schemas` defining the
 default schema path in a initializer.
 
 ```ruby
-ActiveModel::Serializer.config.schema_path = `spec/support/schemas`
+ActiveModelSerializers.config.schema_path = 'spec/support/schemas'
 ```

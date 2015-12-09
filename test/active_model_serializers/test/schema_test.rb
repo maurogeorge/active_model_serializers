@@ -73,13 +73,13 @@ module ActiveModelSerializers
       end
 
       def test_that_assert_with_a_custom_schema_directory
-        original_schema_path = ActiveModel::Serializer.config.schema_path
-        ActiveModel::Serializer.config.schema_path = 'test/support/custom_schemas'
+        original_schema_path = ActiveModelSerializers.config.schema_path
+        ActiveModelSerializers.config.schema_path = 'test/support/custom_schemas'
 
         get :index
         assert_response_schema
 
-        ActiveModel::Serializer.config.schema_path = original_schema_path
+        ActiveModelSerializers.config.schema_path = original_schema_path
       end
     end
   end

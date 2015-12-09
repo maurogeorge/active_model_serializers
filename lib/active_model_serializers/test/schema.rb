@@ -34,7 +34,7 @@ module ActiveModelSerializers
         end
 
         def schema_directory
-          ActiveModel::Serializer.config.schema_path
+          ActiveModelSerializers.config.schema_path
         end
 
         def schema_full_path
