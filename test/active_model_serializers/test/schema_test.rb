@@ -3,6 +3,8 @@ require 'test_helper'
 module ActiveModelSerializers
   module Test
     class SchemaTest < ActionController::TestCase
+      include ActiveModelSerializers::Test::Schema
+
       class MyController < ActionController::Base
         def index
           render json: profile
