@@ -89,5 +89,5 @@
       "$ref": "/schemata/profile#/definitions/description"
     }
   },
-  "id": "schemata/profile"
+  "id": "/schemata/profile"
 }

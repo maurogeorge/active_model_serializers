@@ -15,15 +15,22 @@ module ActiveModelSerializers
           @response = response
           @schema_path = schema_path || schema_path_default
           @message = message
+          @document_store = JsonSchema::DocumentStore.new
+          add_schema_to_document_store
         end
 
         def call
-          status, errors = schema.validate(data)
+          json_schema.expand_references!(store: document_store)
+          status, errors = json_schema.validate(response_body)
           @message ||= errors.map(&:to_s).to_sentence
           status
         end
 
         private
+
+        ActiveModelSerializers.silence_warnings do
+          attr_reader :document_store
+        end
 
         def controller_path
           response.request.filtered_parameters[:controller]
@@ -49,12 +56,20 @@ module ActiveModelSerializers
           JSON.parse(File.read(schema_full_path))
         end
 
-        def schema
-          JsonSchema.parse!(schema_data)
+        def response_body
+          JSON.parse(response.body)
         end
 
-        def data
-          JSON.parse(response.body)
+        def json_schema
+          @json_schema ||= JsonSchema.parse!(schema_data)
+        end
+
+        def add_schema_to_document_store
+          Dir.glob("#{schema_directory}/**/*.json").each do |path|
+            schema_data = JSON.parse(File.read(path))
+            extra_schema = JsonSchema.parse!(schema_data)
+            document_store.add_schema(extra_schema)
+          end
         end
       end
     end
