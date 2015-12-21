@@ -14,6 +14,11 @@ module ActiveModelSerializers
           index
         end
 
+        def name_as_a_integer
+          profile.name = 1
+          index
+        end
+
         def render_using_json_api
           render json: profile, adapter: :json_api
         end
@@ -21,7 +26,7 @@ module ActiveModelSerializers
         private
 
         def profile
-          Profile.new(name: 'Name 1', description: 'Description 1', comments: 'Comments 1')
+          @profile ||= Profile.new(name: 'Name 1', description: 'Description 1', comments: 'Comments 1')
         end
       end
 
@@ -67,6 +72,14 @@ module ActiveModelSerializers
       def test_simple_json_pointers
         get :show
         assert_response_schema('simple_json_pointers.json')
+      end
+
+      def test_simple_json_pointers_that_doesnt_match
+        get :name_as_a_integer
+
+        assert_raises Minitest::Assertion do
+          assert_response_schema('simple_json_pointers.json')
+        end
       end
 
       def test_json_api_schema

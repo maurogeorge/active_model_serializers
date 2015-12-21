@@ -1,10 +1,10 @@
 {
   "properties": {
     "name": {
-      "$ref": "test/support/schemas/custom/show.json#/properties/name"
+      "$ref": "file://custom/show.json#/properties/name"
     },
     "description": {
-      "$ref": "test/support/schemas/custom/show.json#/properties/description"
+      "$ref": "file://custom/show.json#/properties/description"
     }
   }
 }
