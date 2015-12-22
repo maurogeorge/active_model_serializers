@@ -103,22 +103,26 @@ module ActiveModelSerializers
       end
 
       def test_with_a_non_existent_file
-        message = %r{No such file or directory .*- test/support/schemas/non-existent.json}
+        message = 'No such file or directory - No Schema file at test/support/schemas/non-existent.json'
 
         get :show
 
-        error = assert_raises Errno::ENOENT do
+        error = assert_raises ActiveModelSerializers::Test::Schema::MissingSchema do
           assert_response_schema('non-existent.json')
         end
-        assert_match(message, error.message)
+        assert_equal(message, error.message)
       end
 
       def test_that_raises_with_a_invalid_json_body
+        message = 'A JSON text must at least contain two octets!'
+
         get :invalid_json_body
 
-        assert_raises JSON::ParserError do
+        error = assert_raises ActiveModelSerializers::Test::Schema::InvalidSchemaError do
           assert_response_schema('custom/show.json')
         end
+
+        assert_equal(message, error.message)
       end
     end
   end
