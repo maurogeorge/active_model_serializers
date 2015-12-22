@@ -3,6 +3,14 @@ require 'json_schema'
 module ActiveModelSerializers
   module Test
     module Schema
+      # A Minitest Assertion that test the response is valid against a schema.
+      # @params schema_path [String] a custom schema path
+      # @params message [String] a custom error message
+      # @return [Boolean] true when the response is valid
+      # @return [Minitest::Assertion] when the response is invalid
+      # @example
+      #   get :index
+      #   assert_response_schema
       def assert_response_schema(schema_path = nil, message = nil)
         matcher = AssertResponseSchema.new(schema_path, response, message)
         assert(matcher.call, matcher.message)
