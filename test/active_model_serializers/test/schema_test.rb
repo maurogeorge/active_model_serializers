@@ -23,6 +23,10 @@ module ActiveModelSerializers
           render json: profile, adapter: :json_api
         end
 
+        def invalid_json_body
+          render json: ''
+        end
+
         private
 
         def profile
@@ -47,6 +51,7 @@ module ActiveModelSerializers
         end
         assert_equal(message, error.message)
       end
+
 
       def test_that_raises_error_with_a_custom_message_with_a_invalid_schema
         message = 'oh boy the show is broken'
@@ -106,6 +111,14 @@ module ActiveModelSerializers
           assert_response_schema('non-existent.json')
         end
         assert_match(message, error.message)
+      end
+
+      def test_that_raises_with_a_invalid_json_body
+        get :invalid_json_body
+
+        assert_raises JSON::ParserError do
+          assert_response_schema('custom/show.json')
+        end
       end
     end
   end
