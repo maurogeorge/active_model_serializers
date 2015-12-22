@@ -34,11 +34,9 @@ module ActiveModelSerializers
           status
         end
 
-        private
+        protected
 
-        ActiveModelSerializers.silence_warnings do
-          attr_reader :document_store
-        end
+        attr_reader :document_store
 
         def controller_path
           response.request.filtered_parameters[:controller]
