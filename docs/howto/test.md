@@ -93,4 +93,34 @@ We also need to structure our schemata according to Heroku's conventions
 [required metadata](https://github.com/interagent/prmd/blob/master/docs/schemata.md#meta-data)
 and [links](https://github.com/interagent/prmd/blob/master/docs/schemata.md#links).
 
+### JSON Pointers
 
+If we plan to use [JSON
+Pointers](http://spacetelescope.github.io/understanding-json-schema/UnderstandingJSONSchema.pdf) we need to define the `id` attribute on the schema. Example:
+
+```json
+# attributes.json
+
+{
+  "id": "file://attributes.json#",
+  "properties": {
+    "name" : { "type" : "string" },
+    "description" : { "type" : "string" }
+  }
+}
+```
+
+```json
+# show.json
+
+{
+  "properties": {
+    "name": {
+      "$ref": "file://attributes.json#/properties/name"
+    },
+    "description": {
+      "$ref": "file://attributes.json#/properties/description"
+    }
+  }
+}
+```
