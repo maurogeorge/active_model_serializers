@@ -1,8 +1,8 @@
 # How to test
 
-## Test helpers
+## Minitest test helpers
 
-AMS provides a `assert_response_schema` method to be used on your controller tests to
+ActiveModelSerializers provides a `assert_response_schema` method to be used on your controller tests to
 assert the response against a [JSON Schema](http://json-schema.org/). Let's take
 a look in a example.
 
