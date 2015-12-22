@@ -76,3 +76,21 @@ default schema path in a initializer.
 ```ruby
 ActiveModelSerializers.config.schema_path = 'spec/support/schemas'
 ```
+
+### Using with the Heroku’s JSON Schema-based tools
+
+To use the test helper with the [prmd](https://github.com/interagent/prmd) and
+[committee](https://github.com/interagent/committee).
+
+We need to change the schema path to the recommended by prmd:
+
+```ruby
+ActiveModelSerializers.config.schema_path = 'docs/schema/schemata'
+```
+
+We also need to structure our schemata according to Heroku's conventions
+(e.g. including
+[required metadata](https://github.com/interagent/prmd/blob/master/docs/schemata.md#meta-data)
+and [links](https://github.com/interagent/prmd/blob/master/docs/schemata.md#links).
+
+
