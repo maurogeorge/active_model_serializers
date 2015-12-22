@@ -59,11 +59,11 @@ module ActiveModelSerializers
         end
 
         def schema_data
-          JSON.parse(File.read(schema_full_path))
+          load_json_file(schema_full_path)
         end
 
         def response_body
-          JSON.parse(response.body)
+          load_json(response.body)
         end
 
         def json_schema
@@ -72,12 +72,27 @@ module ActiveModelSerializers
 
         def add_schema_to_document_store
           Dir.glob("#{schema_directory}/**/*.json").each do |path|
-            schema_data = JSON.parse(File.read(path))
+            schema_data = load_json_file(path)
             extra_schema = JsonSchema.parse!(schema_data)
             document_store.add_schema(extra_schema)
           end
         end
+
+        def load_json(json)
+          JSON.parse(json)
+        rescue JSON::ParserError => ex
+          raise InvalidSchemaError, ex.message
+        end
+
+        def load_json_file(path)
+          load_json(File.read(path))
+        rescue Errno::ENOENT
+          raise MissingSchema, "No Schema file at #{schema_full_path}"
+        end
       end
+
+      MissingSchema = Class.new(Errno::ENOENT)
+      InvalidSchemaError = Class.new(StandardError)
     end
   end
 end
