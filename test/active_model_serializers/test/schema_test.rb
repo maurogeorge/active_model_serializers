@@ -52,7 +52,6 @@ module ActiveModelSerializers
         assert_equal(message, error.message)
       end
 
-
       def test_that_raises_error_with_a_custom_message_with_a_invalid_schema
         message = 'oh boy the show is broken'
 
