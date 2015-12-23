@@ -1,5 +1,6 @@
 module ActiveModelSerializers
   module Test
-    autoload :Schema, 'active_model_serializers/test/schema'
+    extend ActiveSupport::Autoload
+    autoload :Schema
   end
 end
