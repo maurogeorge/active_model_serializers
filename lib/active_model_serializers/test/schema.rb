@@ -16,6 +16,9 @@ module ActiveModelSerializers
         assert(matcher.call, matcher.message)
       end
 
+      MissingSchema = Class.new(Errno::ENOENT)
+      InvalidSchemaError = Class.new(StandardError)
+
       class AssertResponseSchema
         attr_reader :schema_path, :response, :message
 
@@ -90,9 +93,6 @@ module ActiveModelSerializers
           raise MissingSchema, "No Schema file at #{schema_full_path}"
         end
       end
-
-      MissingSchema = Class.new(Errno::ENOENT)
-      InvalidSchemaError = Class.new(StandardError)
     end
   end
 end
