@@ -4,7 +4,7 @@
 
 ActiveModelSerializers provides a `assert_response_schema` method to be used on your controller tests to
 assert the response against a [JSON Schema](http://json-schema.org/). Let's take
-a look in a example.
+a look in an example.
 
 ```ruby
 class PostsController < ApplicationController
@@ -16,9 +16,9 @@ class PostsController < ApplicationController
 end
 ```
 
-To test the `posts#show` response of this controller we need to create a file in
-`test/support/schemas/posts/show.json` the helper uses a convention to the name
-of the file.
+To test the `posts#show` response of this controller we need to create a file
+named `test/support/schemas/posts/show.json`. The helper uses a naming convention
+to locate the file.
 
 This file is a JSON Schema representation of our response.
 
@@ -44,7 +44,7 @@ end
 
 ### Load a custom schema
 
-If we need to use other schema, for example when we have a namespaced API that
+If we need to use another schema, for example when we have a namespaced API that
 shows the same response, we can pass the path of the schema.
 
 ```ruby
@@ -69,9 +69,9 @@ end
 ```
 ### Change the schema path
 
-By default all schemas are created at `test/support/schemas` if we are using
+By default all schemas are created at `test/support/schemas`. If we are using
 RSpec for example we can change this to `spec/support/schemas` defining the
-default schema path in a initializer.
+default schema path in an initializer.
 
 ```ruby
 ActiveModelSerializers.config.schema_path = 'spec/support/schemas'
