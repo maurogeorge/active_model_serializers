@@ -1,5 +1,3 @@
-require 'json_schema'
-
 module ActiveModelSerializers
   module Test
     module Schema
@@ -23,6 +21,7 @@ module ActiveModelSerializers
         attr_reader :schema_path, :response, :message
 
         def initialize(schema_path, response, message)
+          require_json_schema!
           @response = response
           @schema_path = schema_path || schema_path_default
           @message = message
@@ -91,6 +90,12 @@ module ActiveModelSerializers
           load_json(File.read(path))
         rescue Errno::ENOENT
           raise MissingSchema, "No Schema file at #{schema_full_path}"
+        end
+
+        def require_json_schema!
+          require 'json_schema'
+        rescue LoadError
+          raise LoadError, "You don't have json_schema installed in your application. Please add it to your Gemfile and run bundle install"
         end
       end
     end

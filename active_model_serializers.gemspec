@@ -46,8 +46,6 @@ Gem::Specification.new do |spec|
     # activesupport
     # activemodel
 
-  spec.add_runtime_dependency 'json_schema'
-
   # Soft dependency for pagination
   spec.add_development_dependency 'kaminari', ' ~> 0.16.3'
   spec.add_development_dependency 'will_paginate', '~> 3.0', '>= 3.0.7'
@@ -56,4 +54,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'timecop', '~> 0.7'
   spec.add_development_dependency 'minitest-reporters'
   spec.add_development_dependency 'grape', ['>= 0.13', '< 1.0']
+  spec.add_development_dependency 'json_schema'
 end

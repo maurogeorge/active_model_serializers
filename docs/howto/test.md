@@ -1,5 +1,11 @@
 # How to test
 
+## Dependencies
+
+To use the `assert_response_schema` you need to have the
+[`json_schema`](https://github.com/brandur/json_schema) on your Gemfile. Please
+add it to your Gemfile and run `$ bundle install`.
+
 ## Minitest test helpers
 
 ActiveModelSerializers provides a `assert_response_schema` method to be used on your controller tests to
